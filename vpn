@@ -1,0 +1,28 @@
+#!/bin/bash
+
+function usage() {
+	echo "Usage: ./vpn <connect | disconnect> <openvpn profile name>"
+	echo "       ./vpn status"
+}
+
+function connect() {
+	openvpn3 session-start -c $1
+}
+
+function disconnect() {
+	openvpn3 session-manage --disconnect -c $1
+}
+
+function status() {
+	openvpn3 sessions-list
+}
+
+if [[ $1 == "connect" ]]; then
+	connect $2
+elif [[ $1 == "disconnect" ]]; then
+	disconnect $2
+elif [[ $1 == "status" ]]; then
+	status
+else
+	usage
+fi
